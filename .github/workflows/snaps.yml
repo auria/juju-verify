@@ -1,0 +1,16 @@
+name: Test snap builds
+
+on:
+  push:
+    branches: [test-build-snaps]
+
+jobs:
+  build-snap:
+    name: Build snap
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: snapcore/action-build@v1
+      id: snapcraft
+    - name: Install snap
+      run: sudo snap install --dangerous ${{ steps.snapcraft.outputs.snap }}
